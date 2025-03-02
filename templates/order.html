@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+</head>
+<body>
+    <h1>Place an Order</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.product_id.label }} {{ form.product_id() }}<br>
+        {{ form.quantity.label }} {{ form.quantity() }}<br>
+        {{ form.submit() }}
+    </form>
+    <a href="{{ url_for('index') }}">Back to Products</a>
+</body>
+</html>
