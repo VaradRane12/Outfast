@@ -50,21 +50,28 @@ class Product(Base):
     year = Column(Integer)
     usage = Column(String, default="0")
     productDisplayName = Column(Text)
+    image_link = Column(String(100))
 
 # Create the table
 Base.metadata.create_all(engine)
 
 # Read the CSV file
 df = pd.read_csv("Fashion Data/final_styles.csv")
-
+df_images = pd.read_csv("Fashion Data/images_final.csv")
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Insert each row into the database
+# Create a mapping of product ID to image link
+image_map = dict(zip(df_images["filename"], df_images["link"]))  # Create lookup dictionary
+
+# Insert product data
 for _, row in df.iterrows():
+    product_id = row["id"]
+    image_link = image_map.get(product_id, None)  # Get image link if exists, else None
+
     product = Product(
-        id=row["id"],
+        id=product_id,
         gender=row["gender"],
         masterCategory=row.get("masterCategory", None),
         subCategory=row.get("subCategory", None),
@@ -73,12 +80,14 @@ for _, row in df.iterrows():
         season=row.get("season", None),
         year=row.get("year", None),
         usage=row.get("usage", "0"),
-        productDisplayName=row.get("productDisplayName", None)
+        productDisplayName=row.get("productDisplayName", None),
+        image_link=image_link  # Store the image link
     )
     session.add(product)
 
-# Commit the changes and close the session
+# Commit changes
 session.commit()
+
 session.close()
 
-print("Data inserted successfully.")
+print("Data inserted successfully.") 
