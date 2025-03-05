@@ -37,6 +37,10 @@ class Order(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    
+    return render_template('index.html')
+@app.route("/add_product",methods = ["GET","POST"])
+def add_product():
     form = ProductForm()
     if form.validate_on_submit():
         product = Product(
@@ -51,7 +55,7 @@ def index():
         flash('Product added successfully!', 'success')
         return redirect(url_for('index'))
     products = Product.query.all()
-    return render_template('index.html', form=form, products=products)
+    return render_template('Add_prod.html', form=form, products=products)
 
 @app.route('/order', methods=['GET', 'POST'])
 def order():

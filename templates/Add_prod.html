@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+</head>
+{% block body %}
+
+<body>
+    <form method="POST" class="container p-4 shadow-sm rounded bg-light" style="max-width: 500px;">
+        <h3>Add Product</h3>
+
+        {{ form.hidden_tag() }}
+    
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", placeholder="Enter product name") }}
+        </div>
+    
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", placeholder="Enter product description") }}
+        </div>
+    
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control", placeholder="Enter product price") }}
+        </div>
+    
+        <div class="mb-3">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-select") }} <!-- Dropdown styling -->
+        </div>
+    
+        <div class="mb-3">
+            {{ form.stock.label(class="form-label") }}
+            {{ form.stock(class="form-control", placeholder="Enter stock quantity") }}
+        </div>
+    
+        <button type="submit" class="btn btn-success w-100">{{ form.submit.label.text }}</button>
+    </form>
+    
+    <h2>Available Products</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - ${{ product.price }} (Stock: {{ product.stock }})</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('order') }}">Place an Order</a>
+</body>
+{% endblock %}
+</html>
