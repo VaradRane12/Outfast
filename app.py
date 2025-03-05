@@ -3,11 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, FloatField, IntegerField, SubmitField, SelectField
 from wtforms.validators import DataRequired, NumberRange
-
+from sqlalchemy.sql.expression import func
+import os
 app = Flask(__name__,template_folder="templates")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
-app.config['SECRET_KEY'] = 'secretkey'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'store.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 
 class ProductForm(FlaskForm):
     name = StringField('Product Name', validators=[DataRequired()])
@@ -29,16 +32,34 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(100))
     stock = db.Column(db.Integer, default=0)
-
+with app.app_context():
+    products = Product.query.all()
+    print(products)  # This should not be an empty list
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+class Product(db.Model):
+    __tablename__ = 'products'
+    __table_args__ = {'extend_existing': True}  # Allow redefining
+
+    id = db.Column(db.Integer, primary_key=True)
+    gender = db.Column(db.String(10), nullable=False)
+    masterCategory = db.Column(db.Text)
+    subCategory = db.Column(db.Text)
+    articleType = db.Column(db.String(100))
+    baseColour = db.Column(db.String(20))
+    season = db.Column(db.String(50))
+    year = db.Column(db.Integer)
+    usage = db.Column(db.String, default="0")
+    productDisplayName = db.Column(db.Text)
+    image_link = db.Column(db.String)  # Ensure this exists in your database
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    
-    return render_template('index.html')
+    random_products = Product.query.order_by(func.random()).limit(9).all()  # Fetch 9 random products
+    return render_template('index.html', products=random_products)  # Pass to Jinja template
 @app.route("/add_product",methods = ["GET","POST"])
 def add_product():
     form = ProductForm()
