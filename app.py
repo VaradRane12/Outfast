@@ -7,7 +7,7 @@ from sqlalchemy.sql.expression import func
 import os
 app = Flask(__name__,template_folder="templates")
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'store.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'store1.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -32,9 +32,9 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(100))
     stock = db.Column(db.Integer, default=0)
-with app.app_context():
-    products = Product.query.all()
-    print(products)  # This should not be an empty list
+# with app.app_context():
+#     products = Product.query.all()
+#     print(products)  # This should not be an empty list
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
@@ -53,6 +53,10 @@ class Product(db.Model):
     year = db.Column(db.Integer)
     usage = db.Column(db.String, default="0")
     productDisplayName = db.Column(db.Text)
+    price = db.Column(db.Integer, nullable=True)  
+    discountedPrice = db.Column(db.Integer, nullable=True)  
+    brandName = db.Column(db.String(100), nullable=True)  
+    myntraRating = db.Column(db.Float, nullable=True)  
     image_link = db.Column(db.String)  # Ensure this exists in your database
 
 
