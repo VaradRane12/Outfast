@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block body %}
-
 <div class="container mt-4">
     <div class="row">
         {% for product in products %}
@@ -22,15 +21,5 @@
     <p>&copy; 2025 OutFast. All Rights Reserved.</p>
 </footer>
 
-<style>
-    .product-card {
-        border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease-in-out;
-    }
-    .product-card:hover {
-        transform: scale(1.05);
-    }
-</style>
 
 {% endblock %}

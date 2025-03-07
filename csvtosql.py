@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Text,Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///store1.db', echo=True)
+engine = create_engine('sqlite:///store2.db', echo=True)
 
 Base = declarative_base()
 
@@ -37,13 +37,15 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 image_map = dict(zip(df_images["filename"], df_images["link"])) 
-
+i = 0
 for _, row in df.iterrows():
     product_id = row["id"]
     image_link = image_map.get(product_id, None)
 
     
     with open ("E:\downloads\styles\\"+str(row["id"])+".json","r",encoding="utf-8") as file:
+        print(i)
+        i+=1
         data = json.load(file)
 
 
