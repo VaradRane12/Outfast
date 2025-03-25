@@ -1,6 +1,24 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container mt-4">
+    <!-- Carousel for Offers -->
+    <div id="offerCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for offer in offers %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <img src="{{ offer.image_link }}" class="d-block w-100" alt="Offer Image" style="height: 300px; object-fit: cover;">
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#offerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Product Listing -->
     <div class="row">
         {% for product in products %}
         <div class="col-md-4 col-sm-6 mb-4">
@@ -20,6 +38,5 @@
 <footer class="bg-dark text-white text-center py-3 mt-4">
     <p>&copy; 2025 OutFast. All Rights Reserved.</p>
 </footer>
-
 
 {% endblock %}
