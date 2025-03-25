@@ -6,7 +6,15 @@ home_bp = Blueprint('home', __name__)
 
 @home_bp.route('/', methods=['GET', 'POST'])
 def index():
-    random_products = Product.query.order_by(func.random()).limit(9).all()
+    excluded_categories = ["Innerwear", "Loungewear and Nightwear"]
+    random_products = (
+        Product.query
+        .filter(~Product.subCategory.in_(excluded_categories))
+        .order_by(func.random())  # Randomize order
+        .limit(9)  # Limit to 9 results
+        .all()
+)
+
     offers = [
     {"image_link": "static/assets/sale_banner1.jpg"},
     {"image_link": "static/assets/banner2.jpeg"},
