@@ -1,8 +1,11 @@
 from flask import Flask
 from flask_login import LoginManager
+from flask_login import logout_user
+
 from models import db, User
 from home import home_bp
 from auth import auth_bp
+from cart import cart_bp
 import os
 
 app = Flask(__name__, template_folder="templates")
@@ -22,9 +25,14 @@ login_manager.login_view = "auth.login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return "You must be logged in to access this page!", 403  # Debugging
+
 # Register Blueprints
 app.register_blueprint(home_bp)
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(cart_bp)
 
 if __name__ == "__main__":
     with app.app_context():
