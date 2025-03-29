@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required,current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, db
 
@@ -25,7 +25,7 @@ def register():
         db.session.commit()
         
         flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('home.index'))
 
     return render_template('register.html')
 
@@ -45,8 +45,15 @@ def login():
 
     return render_template('login.html')
 
+@auth_bp.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
+
+
 @auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('home.index'))
