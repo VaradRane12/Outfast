@@ -27,14 +27,35 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ product.productDisplayName }}</h5>
                     <p class="card-text">₹{{ product.price }}</p>
-                    <button class="btn btn-primary">Add to Cart</button>
+                    <button class="btn btn-primary add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
+
+
+
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
-
+<script>
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            
+            fetch('/add_to_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId })
+            }).then(response => response.json())
+            .then(data => {
+                alert("Product added to cart!");
+                window.location.href = "/cart"; // Redirect to cart page
+            });
+        });
+    });
+</script>
 <footer class="bg-dark text-white text-center py-3 mt-4">
     <p>&copy; 2025 OutFast. All Rights Reserved.</p>
 </footer>
