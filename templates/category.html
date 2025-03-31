@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body %}
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+    .master {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    .sub {
+        margin-left: 20px;
+        font-weight: bold;
+    }
+    .product {
+        margin-left: 40px;
+    }
+</style>
+
+<body>
+    <ul>
+        {% for master, sub_dict in category_tree.items() %}
+            <li class="master">
+                <a href="{{ url_for('category.filter_category', master=master) }}">{{ master }}</a>  <!-- Master Category Link -->
+            </li>
+            <ul>
+                {% for sub, articles in sub_dict.items() %}
+                    <li class="sub">
+                        <a href="{{ url_for('category.filter_category', master=master, sub=sub) }}">{{ sub }}</a>  <!--Sub Category Link-->
+                    </li>
+                    <ul>
+                        {% for article in articles %}
+                            <li class="product">
+                                <a href="{{ url_for('category.filter_category', master=master, sub=sub, article=article) }}">{{ article }}</a>  <!-- Product Type Link -->
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</body>
+
+{% endblock %}
