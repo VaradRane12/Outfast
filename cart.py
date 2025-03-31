@@ -3,12 +3,12 @@ from models import db, Product
 from flask_login import login_required, current_user
 from sqlalchemy.sql import func
 cart_bp = Blueprint('cart', __name__)
-
 from flask import request, jsonify, session
 from models import db, Cart, Product, User  # Import necessary models
+from auth import auth_bp
 
 @cart_bp.route('/add_to_cart', methods=["GET",'POST'])
-
+@login_required
 
 def add_to_cart():
     if not current_user.is_authenticated:
@@ -37,7 +37,7 @@ def add_to_cart():
 
     db.session.commit()  # Save changes to the database
 
-    return jsonify({'message': 'Added to cart successfully'})
+    return jsonify({"success":True,'message': "added Succesfully to Cart"})
 
 @cart_bp.route('/cart', methods=['GET', 'POST'])
 @login_required
@@ -61,3 +61,29 @@ def cart_i():
             })
 
     return render_template("cart.html", products=products_with_quantity)
+@cart_bp.route("/update_cart_quantity",methods = ["POST"]) 
+def update_cart():
+    data = request.get_json()
+    product_id = data.get("product_id")
+    action = data.get("action")
+    username = current_user.username
+    existing_cart_item = Cart.query.filter_by(username=username, product_id=product_id).first()
+    if action == 'increase' and existing_cart_item:
+        existing_cart_item.quantity +=1
+    if action == 'decrease' and existing_cart_item:
+        existing_cart_item.quantity -=1
+    db.session.commit()  # Save changes to the database
+
+    return jsonify({"success": True})
+
+@cart_bp.route("/remove_from_cart",methods = ["POST"]) 
+def remove_cart():
+    data = request.get_json()
+    product_id = data.get("product_id")
+    action = data.get("action")
+    username = current_user.username
+    cart_item = Cart.query.filter_by(username=username, product_id=product_id).first()
+    if cart_item:
+        db.session.delete(cart_item)
+        db.session.commit()
+    return jsonify({"success": True})

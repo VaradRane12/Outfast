@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,url_for,redirect
 from flask_login import LoginManager
 from flask_login import logout_user
 
@@ -20,25 +20,28 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 db.init_app(app)
-
+app.register_blueprint(home_bp)
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(cart_bp)
 # Setup Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
-
 @login_manager.user_loader
+
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return "You must be logged in to access this page!", 403  # Debugging
+    return redirect(url_for("auth.login"))
 
-# Register Blueprints
-app.register_blueprint(home_bp)
-app.register_blueprint(auth_bp, url_prefix='/auth')
-app.register_blueprint(cart_bp)
+@app.route('/test')
+def test():
+    return redirect(url_for('auth.login'))  # ✅ Works inside a request contextAAAAAAAAAAAAA
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        
     app.run(debug=True, port=8001)
