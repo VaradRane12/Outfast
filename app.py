@@ -6,6 +6,11 @@ from models import db, User
 from home import home_bp
 from auth import auth_bp
 from cart import cart_bp
+
+from category import category_bp
+
+
+
 import os
 from flask_cors import CORS
 
@@ -23,6 +28,11 @@ db.init_app(app)
 app.register_blueprint(home_bp)
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(cart_bp)
+app.register_blueprint(category_bp)
+
+
+
+
 # Setup Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block body %}
+
+<link rel="stylesheet" 
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            {% for master, sub_dict in category_tree.items() %}
+                <div class="col-md-4">
+                    <div class="list-group">
+                        <a href="{{ url_for('category.filter_category', master=master) }}" 
+                           class="list-group-item list-group-item-action active">{{ master }}</a>
+                        
+                        <div class="list-group">
+                            {% for sub, articles in sub_dict.items() %}
+                                <a href="{{ url_for('category.filter_category', master=master, sub=sub) }}" 
+                                   class="list-group-item list-group-item-action fw-bold">{{ sub }}</a>
+                                
+                                <div class="list-group">
+                                    {% for article in articles %}
+                                        <a href="{{ url_for('category.filter_category', master=master, sub=sub, article=article) }}" 
+                                           class="list-group-item list-group-item-action">{{ article }}</a>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+{% endblock %}
