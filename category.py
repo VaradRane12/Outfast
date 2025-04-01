@@ -20,13 +20,25 @@ def categories():
         if sub not in category_tree[master]:
             category_tree[master][sub] = []
         category_tree[master][sub].append(article)
-
     return render_template("category.html", category_tree=category_tree)
 
 @category_bp.route("/filter_category",methods = ["GET","POST"])
 def filter_category():
-    master = request.args.get('master', None)
-    sub = request.args.get('sub', None)
     article = request.args.get('article', None)
-    print(master,sub,article)
-    return render_template("filtered_results.html", master=master, sub=sub, article=article)
+    sub = request.args.get('sub', None)
+    master = request.args.get('master', None)
+    print((article,sub,master))
+    # Prioritized filtering: Article > Sub > Master
+    if article:
+        products = Product.query.filter_by(articleType=article).all()
+    elif sub:
+        products = Product.query.filter_by(subCategory=sub).all()
+    elif master:
+        products = Product.query.filter_by(masterCategory=master).all()
+    else:
+        products = Product.query.all()  # No filters applied, return all products
+    print(products[0].productDisplayName)
+    return render_template("filtered_results.html", products=products)
+
+
+

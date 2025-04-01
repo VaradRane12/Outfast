@@ -27,8 +27,7 @@ class Product(db.Model):
     myntraRating = db.Column(db.Float, nullable=True)  
     image_link = db.Column(db.String)  # Ensure this exists in your database
 
-    def __repr__(self):
-        return f"<Product {self.name}>"
+
     
 
 class Cart(db.Model):

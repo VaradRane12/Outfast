@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
 
-<h1>Selected Categories</h1>
+<h1>Selected Categories</h1>{{
 
+    products[0].productDisplayName}}
 {% if master %}
     <p><strong>Master Category:</strong> {{ master }}</p>
 {% endif %}
