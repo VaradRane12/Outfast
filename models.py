@@ -1,7 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 db = SQLAlchemy()  # Initialize SQLAlchemy
-
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
 class Product(db.Model):
     __tablename__ = 'products'
     __table_args__ = {'extend_existing': True}  # Allow redefining
@@ -24,3 +29,12 @@ class Product(db.Model):
 
     def __repr__(self):
         return f"<Product {self.name}>"
+    
+
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), db.ForeignKey('users.username'), nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)  # Assuming product ID
+    quantity = db.Column(db.Integer, default=1)
+
+    user = db.relationship('User', backref=db.backref('cart', lazy=True))

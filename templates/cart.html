@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container mt-4">
+    {% for product in products %}
+    <div class="row align-items-center border-bottom py-3">
+        <!-- Product Image -->
+        <div class="col-md-2 col-4">
+            <img src="{{ product.image_link }}" class="img-fluid" alt="{{ product.name }}" style="height: 100px; object-fit: contain;">
+        </div>
+
+        <!-- Product Name -->
+        <div class="col-md-4 col-8">
+            <h5>{{ product.name }}</h5>
+        </div>
+
+        <!-- Product Price -->
+        <div class="col-md-2 text-md-center text-start">
+            <p class="mb-0">₹{{ product.price }}</p>
+        </div>
+
+        <!-- Quantity Control -->
+        <div class="col-md-2 text-md-center text-start d-flex align-items-center">
+            <button class="btn btn-sm btn-outline-secondary decrease-qty" data-product-id="{{ product.id }}">-</button>
+            <span class="mx-2 quantity">{{ product.quantity }}</span>
+            <button class="btn btn-sm btn-outline-secondary increase-qty" data-product-id="{{ product.id }}">+</button>
+        </div>
+
+        <!-- Remove Button -->
+        <div class="col-md-2 text-md-end text-start">
+            <button class="btn btn-sm btn-danger remove-item" data-product-id="{{ product.id }}">Remove</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Increase quantity
+        document.querySelectorAll(".increase-qty").forEach(button => {
+            button.addEventListener("click", function () {
+                let productId = this.getAttribute("data-product-id");
+                updateQuantity(productId, "increase");
+            });
+        });
+
+        // Decrease quantity 
+        document.querySelectorAll(".decrease-qty").forEach(button => {
+            button.addEventListener("click", function () {
+                let productId = this.getAttribute("data-product-id");
+                updateQuantity(productId, "decrease");
+            });
+        });
+
+        // Remove item
+        document.querySelectorAll(".remove-item").forEach(button => {
+            button.addEventListener("click", function () {
+                let productId = this.getAttribute("data-product-id");
+                removeFromCart(productId);
+            });
+        });
+
+        // Function to update quantity
+        function updateQuantity(productId, action) {
+            fetch("/update_cart_quantity", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ product_id: productId, action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Refresh to update quantity
+                }
+            });
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(productId) {
+            fetch("/remove_from_cart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Refresh to remove item
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}
