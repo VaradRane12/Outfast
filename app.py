@@ -6,7 +6,7 @@ from models import db, User
 from home import home_bp
 from auth import auth_bp
 from cart import cart_bp
-
+from search import search_bp
 from category import category_bp
 
 
@@ -29,6 +29,7 @@ app.register_blueprint(home_bp)
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(cart_bp)
 app.register_blueprint(category_bp)
+app.register_blueprint(search_bp)
 
 
 

@@ -37,3 +37,5 @@ class Cart(db.Model):
     quantity = db.Column(db.Integer, default=1)
 
     user = db.relationship('User', backref=db.backref('cart', lazy=True))
+
+

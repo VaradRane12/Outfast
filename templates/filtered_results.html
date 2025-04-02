@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 {% block body %}
 
-<h1>Selected Categories</h1>{{
+<h1>Selected Categories</h1>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+            <img src="{{ product.image_link }}" class="card-img-top" alt="{{ product.productDisplayName }}" style="height: 200px; object-fit: contain;">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ product.productDisplayName }}</h5>
+                <p class="card-text">₹{{ product.price }}</p>
+                <button class="btn btn-primary add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
 
-    products[0].productDisplayName}}
+
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% if master %}
     <p><strong>Master Category:</strong> {{ master }}</p>
 {% endif %}
@@ -15,5 +30,39 @@
 {% endif %}
 
 <a href="{{ url_for('category.categories') }}">Back to Categories</a>
+<script>
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
 
+        fetch('/add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ product_id: productId })
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showCartMessage("Product added to cart!");
+            } else {
+                showCartMessage("Failed to add product!", true);
+            }
+        });
+    });
+});
+
+function showCartMessage(message, isError = false) {
+    const cartMessage = document.getElementById('cart-message');
+    cartMessage.innerText = message;
+    cartMessage.className = `alert ${isError ? 'alert-danger' : 'alert-success'} text-center`;
+    cartMessage.style.display = 'block';
+
+    // Fade out after 3 seconds
+    setTimeout(() => {
+        cartMessage.style.display = 'none';
+    }, 3000);
+}
+
+</script>
 {% endblock %}
