@@ -9,7 +9,7 @@ from cart import cart_bp
 from search import search_bp
 from category import category_bp
 from contact import contact_bp
-
+from checkout import checkout_bp
 
 import os
 from flask_cors import CORS
@@ -31,7 +31,7 @@ app.register_blueprint(cart_bp)
 app.register_blueprint(category_bp)
 app.register_blueprint(search_bp)
 app.register_blueprint(contact_bp)
-
+app.register_blueprint(checkout_bp)
 
 
 

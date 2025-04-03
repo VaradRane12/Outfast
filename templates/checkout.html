@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>Order Summary</h3>
+                    <span>Customer: {{ username }}</span>
+                </div>
+                
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for product in products %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ product.image_link }}" alt="{{ product.name }}" class="rounded me-3" width="64">
+                                    <div>
+                                        <h6 class="mb-1">{{ product.name }}</h6>
+                                        <small class="text-muted">₹{{ product.price }} each</small>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-secondary rounded-pill">Qty: {{ product.quantity }}</span>
+                                    <div class="fw-bold mt-1">₹{{ product.total }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total Items:</span>
+                            <span class="fw-bold">{{ total_quantity }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between fs-5">
+                            <span>Order Total:</span>
+                            <span class="fw-bold text-success">₹{{ total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-white d-flex justify-content-between">
+                    <a href="{{ url_for('cart.cart_i') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-chevron-left me-1"></i> Back to Cart
+                    </a>
+                    <a href="{{ url_for('checkout.payment', username=username) }}" class="btn btn-primary">
+                        Proceed to Payment <i class="fas fa-chevron-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+    }
+    .list-group-item:first-child {
+        border-top: none;
+    }
+    .card-header {
+        border-radius: 0 !important;
+    }
+</style>
+{% endblock %}

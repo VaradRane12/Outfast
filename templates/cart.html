@@ -31,6 +31,13 @@
         </div>
     </div>
     {% endfor %}
+
+    <!-- Checkout Button -->
+    <div class="text-end mt-4">
+        <a href="{{ url_for('checkout.checkout_summary', username=username) }}" class="btn btn-success btn-lg">
+            Proceed to Checkout
+        </a>
+    </div>
 </div>
 
 <script>

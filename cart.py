@@ -59,8 +59,8 @@ def cart_i():
                 'image_link': product.image_link,
                 'quantity': item.quantity  # Include quantity from Cart table
             })
-
-    return render_template("cart.html", products=products_with_quantity)
+    print(current_user.username)
+    return render_template("cart.html", products=products_with_quantity,username=current_user.username)
 @cart_bp.route("/update_cart_quantity",methods = ["POST"]) 
 def update_cart():
     data = request.get_json()
