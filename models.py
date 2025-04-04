@@ -1,3 +1,5 @@
+import random
+import string
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -39,3 +41,41 @@ class Cart(db.Model):
     user = db.relationship('User', backref=db.backref('cart', lazy=True))
 
 
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+
+    order_number = db.Column(db.String(20), primary_key=True)
+    username = db.Column(db.String(50), nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
+    total_quantity = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, username, total_price, total_quantity, order_number=None):
+        self.order_number = order_number or self.generate_order_number()
+        self.username = username
+        self.total_price = total_price
+        self.total_quantity = total_quantity
+        self.order_number = order_number
+
+
+    def generate_order_number(self):
+        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+
+
+class OrderItem(db.Model):
+    __tablename__ = 'order_items'
+
+    id = db.Column(db.Integer, primary_key=True)
+    order_number = db.Column(db.String(20), db.ForeignKey('orders.order_number'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+
+    order = db.relationship('Order', backref='order_items')
+    product = db.relationship('Product')
+
+    def __init__(self, order_number, product_id, quantity, price):
+        self.order_number = order_number
+        self.product_id = product_id
+        self.quantity = quantity
+        self.price = price

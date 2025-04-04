@@ -47,9 +47,11 @@
                     <a href="{{ url_for('cart.cart_i') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-chevron-left me-1"></i> Back to Cart
                     </a>
-                    <a href="{{ url_for('checkout.payment', username=username) }}" class="btn btn-primary">
-                        Proceed to Payment <i class="fas fa-chevron-right ms-1"></i>
-                    </a>
+                    <form method="POST" action="{{ url_for('checkout.checkout_summary', username=username) }}">
+                        <button type="submit" class="btn btn-success">Proceed to Payment</button>
+                    </form>
+                    
+                    
                 </div>
             </div>
         </div>
