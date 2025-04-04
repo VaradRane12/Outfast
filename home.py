@@ -16,7 +16,6 @@ def index():
 )
 
     offers = [
-    {"image_link": "static/assets/sale_banner1.jpg"},
     {"image_link": "static/assets/banner2.jpeg"},
     {"image_link": "static/assets/banner3.jpeg"},
 ]
