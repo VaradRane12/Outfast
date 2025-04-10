@@ -1,0 +1,49 @@
+# Normalize text files to LF
+* text=auto
+
+# Frontend: React / JavaScript / TypeScript
+*.js text
+*.jsx text
+*.ts text
+*.tsx text
+*.json text
+*.css text
+*.scss text
+*.html text
+*.md text
+*.yml text
+*.yaml text
+
+# Backend: Python
+*.py text diff=python
+
+# Ignore build/dist output from stats
+/build/* linguist-vendored
+/frontend/build/* linguist-vendored
+/node_modules/* linguist-vendored
+/venv/* linguist-vendored
+/.next/* linguist-vendored
+
+# Mark binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pdf binary
+*.mp4 binary
+
+# Ignore lock files from stats
+package-lock.json linguist-generated
+yarn.lock linguist-generated
+Pipfile.lock linguist-generated
+
+# Ignore test snapshot files
+*.snap linguist-generated
+
+# GitHub linguist overrides (optional, if Python backend dominates logic)
+*.py linguist-detectable=true
