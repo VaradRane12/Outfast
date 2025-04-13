@@ -79,6 +79,7 @@
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('auth.order_history') }}">Order History</a></li>
                     <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a></li>
                 {% else %}
                     <!-- Show Login Form for Non-Logged-in Users -->

@@ -19,7 +19,7 @@
 
 # Ignore build/dist output from stats
 /build/* linguist-vendored
-/frontend/build/* linguist-vendored
+/frontend/build/* linguist-vendored 
 /node_modules/* linguist-vendored
 /venv/* linguist-vendored
 /.next/* linguist-vendored

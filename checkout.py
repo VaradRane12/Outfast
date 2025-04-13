@@ -68,14 +68,16 @@ def checkout_summary(username):
 @login_required
 def payment(username, order_number):
     order = Order.query.filter_by(order_number=order_number, username=username).first()
-
     if not order:
         flash("Invalid order!", "danger")
         return redirect(url_for('checkout.checkout_summary', username=username))
 
     if request.method == "POST":
-        flash(f"Payment for Order {order.order_number} successful!", "success")
-        return redirect(url_for('home.index'))  # Redirect after payment is done
+        flash(f"Payment for Order {order.order_number} successful!", "success") 
+        return redirect(url_for('home.index')) 
 
-    # ✅ Render the payment page on GET
-    return render_template("payment.html", username=username, order=order)
+    return render_template("payment_page.html", username=username, order=order)
+
+@checkout_bp.route('/payment_success', methods=['POST'])
+def payment_success():
+    return render_template('thank_you.html')  

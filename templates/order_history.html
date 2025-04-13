@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block body %}
+
+    <title>My Orders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7ff;
+            padding: 2rem;
+            color: #1f2937;
+        }
+        .order-box {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #6366f1;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #d1d5db;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .order-id {
+            font-weight: 600;
+            color: #374151;
+        }
+        .order-total {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #4f46e5;
+        }
+        .product {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1.25rem;
+        }
+        .product img {
+            width: 80px;
+            height: 80px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            background: #f3f4f6;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .product-price {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+    </style>
+
+<body>
+
+    <h1 style="color:#4f46e5;">Order History for {{ current_user.username }}</h1>
+
+    {% for order in orders %}
+    <div class="order-box">
+        <div class="order-header">
+            <div class="order-id"><i class="fas fa-receipt"></i> Order ID: {{ order.order_number }}</div>
+            <div class="order-total">
+                ₹{{ "%.2f"|format(order.total_price) }}
+            </div>
+        </div>
+        {% for item in ht_dic[order.order_number] %}
+        <div class="product">
+            <img src="{{ item[0] }}" alt="product">
+            <div class="product-info">
+                <div class="product-name">{{ item[1] }}</div>
+                <div class="product-price">₹{{ "%.2f"|format(item[2]) }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+</body>
+</html>
+{% endblock %}
