@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Out-Fast</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #1d1c1c;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f3dc5b;
+            perspective: 1000px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0c5a5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #69cae0;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #69bbf1;
+        }
+
+        /* Hero section with video background and 3D elements */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(89, 193, 235, 0.7) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: rgb(31, 26, 26);
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 12rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content h1::after {
+            content: 'Us';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(255, 255, 255, 0.3);
+            transform: translateZ(-10px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
+        }
+
+        /* 3D Disaster Elements */
+        .disaster-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .disaster {
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .hurricane {
+            width: 150px;
+            height: 150px;
+            top: 15%;
+            left: 10%;
+            animation: spin 20s linear infinite;
+        }
+
+        .hurricane::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" d="M50 10c22.1 0 40 17.9 40 40S72.1 90 50 90 10 72.1 10 50s17.9-40 40-40zm0 10c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20zm0 10c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .earthquake {
+            width: 200px;
+            height: 50px;
+            bottom: 20%;
+            right: 15%;
+            animation: shake 5s ease-in-out infinite;
+        }
+
+        .earthquake::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50"><path fill="white" d="M0 25 L20 15 L40 35 L60 5 L80 30 L100 10 L120 40 L140 20 L160 25 L180 15 L200 25"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .flood {
+            width: 180px;
+            height: 80px;
+            bottom: 10%;
+            left: 20%;
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        .flood::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 80"><path fill="white" d="M0 40 Q22.5 20, 45 40 Q67.5 60, 90 40 Q112.5 20, 135 40 Q157.5 60, 180 40 L180 80 L0 80 Z"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .fire {
+            width: 100px;
+            height: 150px;
+            top: 20%;
+            right: 10%;
+            animation: flicker 3s ease-in-out infinite alternate;
+        }
+
+        .fire::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><path fill="orange" d="M50 0 Q60 50, 80 60 Q60 70, 70 100 Q50 85, 30 100 Q40 70, 20 60 Q40 50, 50 0"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) translateZ(20px); }
+            100% { transform: rotate(360deg) translateZ(20px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) translateZ(10px); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) translateZ(10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px) translateZ(10px); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) translateZ(15px); }
+            50% { transform: translateY(-20px) translateZ(15px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) translateZ(25px); opacity: 0.8; }
+            25% { transform: scale(0.95) translateZ(25px); opacity: 0.7; }
+            50% { transform: scale(1.05) translateZ(25px); opacity: 0.9; }
+            75% { transform: scale(0.97) translateZ(25px); opacity: 0.8; }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(226, 143, 143);
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            font-size: 2rem;
+            display: block;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* Section styles with 3D effects */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #e26139;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #9eb9e5, transparent);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Our centers section with 3D cards */
+        .centers {
+            background-color: #c6f2c0;
+            position: relative;
+        }
+
+        .centers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%232a6d7c" opacity="0.1"/></svg>');
+            z-index: 1;
+        }
+
+        .centers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .center-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(0) rotateX(0) rotateY(0);
+        }
+
+        .center-card:hover {
+            transform: translateZ(20px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .center-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2a6d7c;
+            position: relative;
+        }
+
+        .center-card h3::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            left: -10px;
+            border-top: 3px solid #58d4ef;
+            border-left: 3px solid #56cde8;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .center-card:hover h3::before {
+            opacity: 1;
+            transform: translateX(-5px) translateY(-5px);
+        }
+
+        /* What we do section with 3D parallax */
+        .what-we-do {
+            background: linear-gradient(135deg, #6ecae8 0%, #affeb3 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .parallax-item {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .p1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .p2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .p3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
+        }
+
+        .what-we-do h2 {
+            color: rgb(250, 77, 77);
+        }
+
+        .what-we-do h2::after {
+            background: linear-gradient(90deg, rgb(217, 136, 136), transparent);
+        }
+
+        /* Capabilities section with 3D icons */
+        .capabilities {
+            background-color: rgb(247, 242, 153);
+            position: relative;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .capability-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: #b2e5f3;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .capability-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e05757 0%, #f38fee 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .capability-card:hover::before {
+            opacity: 1;
+        }
+
+        .capability-card:hover {
+            transform: translateZ(30px);
+            color: rgb(238, 153, 153);
+        }
+
+        .capability-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #58c9e3;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            display: inline-block;
+        }
+
+        .capability-card:hover .capability-icon {
+            color: rgb(189, 247, 127);
+            transform: rotateY(360deg);
+        }
+
+        .capability-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.5s ease;
+        }
+
+        .capability-card p {
+            transition: all 0.5s ease;
+        }
+
+        /* How we work section with 3D timeline */
+        .how-we-work {
+            background-color: #f4c4c4;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, #ed505d, #f388f8);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            transform-style: preserve-3d;
+            transform: translateZ(-5px);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            perspective: 1000px;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: rgb(251, 229, 214);
+            border: 4px solid #67cfe6;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::after {
+            background-color: #62cee6;
+            transform: scale(1.2);
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: rgb(214, 210, 244);
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            transform: rotateX(0);
+        }
+
+        .timeline-content:hover {
+            transform: rotateX(5deg) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-content h3 {
+            color: #287f92;
+            margin-bottom: 10px;
+        }
+
+        /* 3D Disaster Models for Timeline */
+        .disaster-model {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 0;
+            transform-style: preserve-3d;
+            z-index: 2;
+        }
+
+        .left .disaster-model {
+            right: -70px;
+        }
+
+        .right .disaster-model {
+            left: -70px;
+        }
+
+        .disaster-alert {
+            width: 100%;
+            height: 100%;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .disaster-map {
+            width: 100%;
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 10px;
+            transform: rotateY(45deg);
+            animation: rotate3D 8s infinite linear;
+        }
+
+        .disaster-volunteer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .disaster-volunteer::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="30" r="20" fill="%232ecc71"/><path d="M30 60 Q50 90 70 60" stroke="%232ecc71" stroke-width="10" fill="none"/></svg>') center/contain no-repeat;
+            animation: bounce 3s infinite;
+        }
+
+        .disaster-resources {
+            width: 100%;
+            height: 100%;
+            background-color: #f1c40f;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: rotate3D 6s infinite alternate;
+        }
+
+        .disaster-support {
+            width: 100%;
+            height: 100%;
+            background-color: #c57ae3;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            50% { transform: rotateY(180deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(0deg); }
+        }
+
+        /* Team section with 3D cards */
+        .team {
+            background-color: rgb(244, 220, 202);
+            position: relative;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .team-member {
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .team-member:hover {
+            transform: translateZ(20px);
+        }
+
+        .member-image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1rem;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #14441d;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .team-member:hover img {
+            transform: rotateY(10deg) rotateX(10deg);
+            box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-image-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid rgba(42, 109, 124, 0.3);
+            top: 10px;
+            left: 10px;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        .team-member:hover .member-image-container::after {
+            transform: translateZ(-20px);
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #53b6cc;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #320303;
+        }
+
+        .team-member .role {
+            font-weight: bold;
+            color: #61c7de;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Reviews section with 3D carousel */
+        .reviews {
+            background-color: #f9f9f9c0;
+            padding-bottom: 8rem;
+            position: relative;
+        }
+
+        .reviews::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path d="M15 5 L20 20 L5 15 Z" fill="%232a6d7c" opacity="0.05"/></svg>');
+            z-index: 0;
+        }
+
+        .reviews-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1000px;
+            z-index: 1;
+        }
+
+        .reviews-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .review {
+            min-width: 100%;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform: rotateY(0);
+            transform-style: preserve-3d;
+        }
+
+        .current-review {
+            transform: rotateY(0) translateZ(50px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .review-text::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            color: rgba(227, 237, 116, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #57ecee;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .review-author::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 2px;
+            background-color: #40bb37;
+            margin-right: 10px;
+        }
+
+        .slider-nav {
+            text-align: center;
+            margin-top: 2rem;
+            perspective: 1000px;
+        }
+
+        .slider-nav button {
+            background: linear-gradient(135deg, #2a6d7c 0%, #1d4d59 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-nav button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .slider-nav button:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-nav button:hover::after {
+            transform: translateY(0);
+        }
+
+        /* 3D Globe in background */
+        .globe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .globe {
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #2a6d7c, #1d4d59);
+            position: relative;
+            box-shadow: 0 0 100px rgba(42, 109, 124, 0.5);
+            animation: rotateGlobe 60s linear infinite;
+        }
+
+        .globe::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M10,50 Q25,30 40,50 T70,50 T100,50" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,60 Q25,40 40,60 T70,60 T100,60" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,70 Q25,50 40,70 T70,70 T100,70" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,40 Q25,20 40,40 T70,40 T100,40" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,30 Q25,10 40,30 T70,30 T100,30" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M50,10 Q30,25 50,40 T50,70 T50,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M60,10 Q40,25 60,40 T60,70 T60,100" stroke="rgba(255,255,255  stroke-width="0.5"/><path d="M60,10 Q40,25 60,40 T60,70 T60,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M70,10 Q50,25 70,40 T70,70 T70,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M40,10 Q20,25 40,40 T40,70 T40,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M30,10 Q10,25 30,40 T30,70 T30,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/></svg>');
+        }
+
+        @keyframes rotateGlobe {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 6rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0;
+            }
+
+            .left .disaster-model,
+            .right .disaster-model {
+                left: 10px;
+                top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Globe Background -->
+    <div class="globe-container">
+        <div class="globe"></div>
+    </div>
+
+    <!-- Hero Section with Video Background and 3D Elements -->
+    <section class="hero">
+        <video autoplay muted loop>
+            <source src="dbms vid.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="disaster-elements">
+            <div class="disaster hurricane"></div>
+            <div class="disaster earthquake"></div>
+            <div class="disaster flood"></div>
+            <div class="disaster fire"></div>
+        </div>
+        <div class="hero-content">
+            <h1></h1>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <i>↓</i>
+        </div>
+    </section>
+
+    <!-- Our Centers Section with 3D Cards -->
+    <section class="centers" id="centers">
+        <div class="container">
+            <h2>Our Centers</h2>
+            <div class="centers-grid">
+                <div class="center-card">
+                    <h3>Mumbai HQ</h3>
+                    <p>Out Fast’s main headquarters is located in Mumbai, serving as the nerve center for rapid fashion delivery across the city. Equipped with cutting-edge logistics technology and a fleet of agile delivery personnel, we ensure your style reaches you in just 15 minutes—no matter where you are..</p>
+                </div>
+                <div class="center-card">
+                    <h3>South India</h3>
+                    <p>Out Fast’s South India hub is strategically located in Bengaluru, focusing on efficient coordination and rapid fashion deployment across the southern region. Partnering with top logistics providers, we ensure seamless and ultra-fast deliveries, keeping your style game on point—anytime, anywhere..</p>
+                </div>
+                <div class="center-card">
+                    <h3>East India</h3>
+                    <p>Out Fast’s East India center is located in Kolkata, specializing in swift fashion distribution across the eastern region. With advanced inventory management systems and dedicated delivery teams, we ensure that the latest trends reach you faster than ever—even in the bustling streets of Bengal.</p>
+                </div>
+                <div class="center-card">
+                    <h3>West India </h3>
+                    <p>Out Fast’s West India center is based in Pune, serving as the hub for fast fashion delivery across Maharashtra and neighboring regions. Utilizing drone-assisted logistics and real-time traffic mapping, we guarantee your outfit reaches you in record time—even in the most crowded urban spots.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section with 3D Parallax -->
+    <section class="what-we-do" id="what-we-do">
+        <div class="parallax-bg">
+            <div class="parallax-item p1"></div>
+            <div class="parallax-item p2"></div>
+            <div class="parallax-item p3"></div>
+        </div>
+        <div class="container">
+            <h2>What We Do</h2>
+            <p>Out Fast leverages cutting-edge logistics technology to revolutionize fashion delivery, bringing the latest trends to your doorstep in just 15 minutes.</p>
+            <p>We combine AI-driven inventory management, real-time traffic analysis, and agile delivery networks to ensure lightning-fast service. Our system dynamically maps optimal routes, reducing delivery times even during peak hours.</p>
+            <p>Our distribution network spans across major cities, supported by strategically located hubs and dedicated delivery teams. We continuously train our personnel and upgrade our technology to maintain unmatched speed and reliability.</p>
+            <p>From party wear to office chic, casual vibes to festive fits, our diverse collection is always in stock and ready to ship. Whatever your fashion emergency, Out Fast is here to keep you stylish—without the wait.</p>
+        </div>
+    </section>
+
+    <!-- Our Capabilities Section with 3D Icons -->
+    <section class="capabilities" id="capabilities">
+        <div class="container">
+            <h2>Our Capabilities</h2>
+            <div class="capabilities-grid">
+                <div class="capability-card">
+                    <div class="capability-icon">🚀</div>
+                    <h3>Lightning-Fast Delivery</h3>
+                    <p>Cutting-edge logistics and agile delivery networks enable us to get fashion to your doorstep in just 15 minutes—no matter the rush.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📡</div>
+                    <h3>Real-Time Route Optimization</h3>
+                    <p>AI-powered traffic analysis and dynamic route mapping ensure the quickest path to your location, even during peak hours.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🗺️ </div>
+                    <h3>Strategic Hubs</h3>
+                    <p>Distribution centers located in major cities across India ensure rapid fulfillment and reduced delivery times.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📱</div>
+                    <h3>Seamless App Experience</h3>
+                    <p>Intuitive mobile app for browsing, ordering, and tracking—giving you complete control and real-time updates on your fashion delivery.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">💼</div>
+                    <h3>Smart Inventory Management</h3>
+                    <p>Advanced AI algorithms keep track of fashion trends and stock levels, ensuring popular items are always available when you need them.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">💪</div>
+                    <h3>Dedicated & Sustainable Delivery</h3>
+                    <p>Our agile delivery teams are trained to use the latest technology for efficient and safe deliveries—every time. With eco-friendly packaging and optimized routes, we minimize our carbon footprint while keeping you stylish at lightning speed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section with 3D Timeline -->
+    <section class="how-we-work" id="how-we-work">
+        <div class="container">
+            <h2>How We Work</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-alert"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🚨 Order Alert & Processing</h3>
+                        <p>The moment you place an order, our system instantly alerts the nearest hub and begins processing your request with real-time inventory checks.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="disaster-model">
+                        <div class="disaster-map"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>📍 Route Mapping & Optimization</h3>
+                        <p>Our AI-driven algorithms map the fastest route to your location, accounting for traffic, road conditions, and delivery density to ensure the quickest arrival.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-volunteer"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🏃 Rapid Deployment</h3>
+                        <p>Our agile delivery teams spring into action, equipped with cutting-edge navigation tools to get your order moving within seconds.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="disaster-model">
+                        <div class="disaster-resources"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🚚 Real-Time Tracking</h3>
+                        <p>Track your delivery in real time through our app, with live updates and estimated time of arrival so you're always in the know.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-support"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>✨ Efficient & Customer-Centric Logistics</h3>
+                        <p>We optimize routes and packaging to minimize environmental impact while maintaining unbeatable speed, prioritizing your satisfaction through continuous feedback and improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section with 3D Cards -->
+    <section class="team" id="leadership">
+        <div class="container">
+            <h2>Leadership - Meet the Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="VARDA.jpeg" alt="CEO Portrait">
+                    </div>
+                    <h3>Varda Gachake</h3>
+                    <p class="role">CEO</p>
+                    <p>Logistics visionary with 20 years of experience in supply chain optimization and rapid delivery solutions. Pioneered the 15-minute fashion delivery model.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="SHARWARI.jpeg" alt="CEO Portrait">
+                    </div>
+                    <h3>Sharwari Kathole</h3>
+                    <p class="role">CEO</p>
+                    <p>Operational strategist with a track record of transforming logistics into ultra-fast systems. Led multi-city expansion while maintaining peak efficiency.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="VARAD.jpg" alt="CEO Portrait">
+                    </div>
+                    <h3>Varad Rane</h3>
+                    <p class="role">CEO</p>
+                    <p>Tech innovator with expertise in AI-driven route optimization and real-time tracking systems. Developed the core technology behind our lightning-fast deliveries.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="SOHAM.jpeg" alt="MENTOR Portrait">
+                    </div>
+                    <h3>Soham Raddi</h3>
+                    <p class="role">CEO</p>
+                    <p>Brand strategist with a passion for fashion and consumer engagement. Spearheaded campaigns that made Out Fast a household name in fashion delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section with 3D Carousel -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2>Reviews</h2>
+            <div class="reviews-slider">
+                <div class="reviews-container">
+                    <div class="review">
+                        <p class="review-text">"Out Fast has completely changed how I shop for clothes! Whether it’s a last-minute party or an urgent work meeting, I know I can count on them to deliver stylish outfits in just 15 minutes. Unbelievable speed and quality!"</p>
+                        <p class="review-author">- Priya Malhotra, Fashion Enthusiast</p>
+                    </div>
+                    <div class="review">
+                        <p class="review-text">"I never thought fast fashion could actually be this fast! Out Fast has saved me more times than I can count. The app is super easy to use, and tracking my order in real time is such a game-changer."</p>
+                        <p class="review-author">- Rohit Sharma, Corporate Professional</p>
+                    </div>
+                    <div class="review">
+                        <p class="review-text">"Being a busy mom, I hardly have time to shop. Out Fast makes it effortless to stay trendy without spending hours at the mall. Plus, their sustainable packaging makes me feel good about my choices!"</p>
+                        <p class="review-author">- Anjali Rao, Working Mom</p>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <button id="prev">Previous</button>
+                    <button id="next">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Parallax effect for background elements
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            
+            // Parallax for hero section
+            document.querySelectorAll('.disaster').forEach((element, index) => {
+                const speed = 0.1 * (index + 1);
+                element.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+            
+            // Parallax for What We Do section
+            document.querySelectorAll('.parallax-item').forEach((element, index) => {
+                const speed = 0.05 * (index + 1);
+                element.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // 3D card effect for center cards
+        document.querySelectorAll('.center-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                this.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(20px)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+
+        // Reviews slider functionality with 3D effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.reviews-container');
+            const reviews = document.querySelectorAll('.review');
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            
+            let currentIndex = 0;
+            
+            function showReview(index) {
+                if (index < 0) {
+                    currentIndex = reviews.length - 1;
+                } else if (index >= reviews.length) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex = index;
+                }
+                
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Add 3D effect to current review
+                reviews.forEach((review, i) => {
+                    if (i === currentIndex) {
+                        review.classList.add('current-review');
+                    } else {
+                        review.classList.remove('current-review');
+                    }
+                });
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                showReview(currentIndex - 1);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                showReview(currentIndex + 1);
+            });
+            
+            // Initialize first review with 3D effect
+            showReview(0);
+            
+            // Auto-rotate reviews every 5 seconds
+            setInterval(() => {
+                showReview(currentIndex + 1);
+            }, 5000);
+        });
+
+        // Create floating 3D disaster objects
+        function createFloatingDisasters() {
+            const disasterTypes = [
+                { name: 'hurricane', emoji: '🌀' },
+                { name: 'earthquake', emoji: '⚡' },
+                { name: 'flood', emoji: '💧' },
+                { name: 'fire', emoji: '🔥' },
+                { name: 'tornado', emoji: '🌪️' },
+                { name: 'volcano', emoji: '🌋' }
+            ];
+            
+            const container = document.createElement('div');
+            container.className = 'floating-disasters';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '-1';
+            container.style.opacity = '0.1';
+            
+            for (let i = 0; i < 15; i++) {
+                const disaster = document.createElement('div');
+                const randomType = disasterTypes[Math.floor(Math.random() * disasterTypes.length)];
+                
+                disaster.textContent = randomType.emoji;
+                disaster.className = `floating-disaster ${randomType.name}`;
+                disaster.style.position = 'absolute';
+                disaster.style.fontSize = `${Math.random() * 20 + 10}px`;
+                disaster.style.left = `${Math.random() * 100}%`;
+                disaster.style.top = `${Math.random() * 100}%`;
+                disaster.style.animation = `float ${Math.random() * 10 + 5}s ease-in-out infinite alternate, spin ${Math.random() * 20 + 10}s linear infinite`;
+                
+                container.appendChild(disaster);
+            }
+            
+            document.body.appendChild(container);
+        }
+        
+        createFloatingDisasters();
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 3D rotation effect for capability icons
+        document.querySelectorAll('.capability-icon').forEach(icon => {
+            icon.addEventListener('mouseover', function() {
+                this.style.transform = 'rotateY(180deg)';
+            });
+            
+            icon.addEventListener('mouseout', function() {
+                this.style.transform = 'rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
